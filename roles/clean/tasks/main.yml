@@ -1,0 +1,141 @@
+---
+# tasks file for clean
+
+- name: delete tmp folder
+  shell: "rm -rf /tmp/*"
+
+
+- name: delete knows_host
+  shell: "rm -rf /root/.ssh/known_hosts"
+    
+
+- name: delete kvm network
+  virt_net:
+    command: destroy
+    name: "{{  kvm_network_name}}"
+
+- name: undefine vm
+  virt:
+    command: shutdown
+    name: "{{ kvm_vm_hostname }}"
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: "{{ kvm_vm_hostname }}"
+  ignore_errors: true
+
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: "{{ kvm_vm_hostname }}"
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-bootstrap
+  ignore_errors: true
+
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-master0
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-master1
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-master2
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-worker0
+  ignore_errors: true
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-worker1
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: destroy
+    name: ocp4-worker2
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: ocp4-worker1
+  ignore_errors: true
+
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: ocp4-worker2
+  ignore_errors: true
+
+
+- name: define vm
+  virt:
+    command: undefine
+    name: ocp4-worker0
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: ocp4-master1
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: ocp4-master2
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: ocp4-master0
+  ignore_errors: true
+
+- name: undefine vm
+  virt:
+    command: undefine
+    name: ocp4-bootstrap
+  ignore_errors: true
+
+
+- name: remove all images file
+  find:
+    paths: "{{ libvirt_image_directory }}"
+    patterns: "*.qcow2"
+  register: files_to_delete
+
+- name: Ansible remove file glob
+  file:
+     path: "{{ item.path }}"
+     state: absent
+  with_items: "{{ files_to_delete.files }}"
+
+
+
+- name: remove all qcow2 file
+  command: "rm -rf /var/lib/libvirt/images/*.qcow2"
+
+- name: unset ssh connection 
+  command: "unset SSH_AUTH_SOCK"

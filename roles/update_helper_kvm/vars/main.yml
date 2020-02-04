@@ -1,0 +1,8 @@
+---
+# vars file for tester
+staticips: false
+ocp_bios: "{{ v_rhcos_bios }}"
+ocp_initramfs: "{{ v_rhcos_initramfs }}"
+ocp_install_kernel: "{{ v_rhcos_install_kernel }}"
+ocp_client: "{{ v_ocp_client }}"
+ocp_installer: "{{ v_ocp_installer }}"
