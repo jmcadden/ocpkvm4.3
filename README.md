@@ -1,4 +1,4 @@
-Installing OCP 4.2 with KVM
+Installing OCP 4.3 with KVM
 ===========================
 
 This Guide will get you up and running using KVM `libvirt`. This setup should
@@ -147,7 +147,7 @@ installed in the following order:
 
 Logon to the helper node. Launch `virt-manager`
 
-![virt-mgr](images/virt-mgr.png)
+[![virt-mgr](images/virt-mgr.png)](https://youtu.be/2SkIdhBi0OI)
 
 Each of the VM needs to be PXE bootable (Pre-Boot Execution Environment).
 The result is an IP address assigned to the VM and the OS installed.
@@ -187,6 +187,8 @@ The bootstrap VM does the OS installation for all the VMs. Wait for the
 PXE boot to be completed on each VM. When the PXE boot is done on the
 worker-2 node, ssh to the helper node. Execute the following command to
 check that the bootstrap node is finished with installation.
+
+ssh into helper node and execute the following command
 ```
 cd /opt/ocp4
 openshift-install wait-for bootstrap-complete --log-level debug
