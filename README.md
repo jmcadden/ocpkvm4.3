@@ -94,7 +94,7 @@ Login to the Host KVM as root and execute the following commands.
 ```
 cd /opt
 git clone https://github.com/fctoibm/ocpkvm4.3.git
-cd /opt/ocpkvm4.2
+cd /opt/ocpkvm4.3
 ```
 Edit the [vars.yaml](./vars.yaml) file with the IP addresses that will be
 assigned to the masters/workers/boostrap. The IP addresses need to be
