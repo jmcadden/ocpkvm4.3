@@ -49,7 +49,7 @@ worker_ip:
    2: "100.106.11.207"
 
 ##################################################################
-# The following are variables that are parameterized for OCP v4.2
+# The following are variables that are parameterized for OCP v4.3
 ##################################################################
 
 # latest openshift build 
