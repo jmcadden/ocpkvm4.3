@@ -110,6 +110,18 @@ Run the playbook to setup the helper node
 ```
 ansible-playbook -e @vars.yaml  play.yaml
 ```
+```
+If the ansible script encounters an error while "Downloading OC clients" due to not able to find the target file points to by the url, 
+most likely RedHat has published another OC client release.  Go the website points to by the url minus the filename to find out the OC client filename.  
+Update the v_ocp_client variable in the vars.yaml file with the latest dot release number.  For example:
+
+v_ocp_client: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-{{openshift_build}}.0.tar.gz"
+
+may need to be update to
+
+v_ocp_client: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-{{openshift_build}}.1.tar.gz"
+
+```
 ### If the ansible playbook fails
 
 If the ansible scripts fail, execute the following script to clean the
