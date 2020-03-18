@@ -112,8 +112,8 @@ ansible-playbook -e @vars.yaml  play.yaml
 ```
 ```
 If the ansible script encounters an error while "Downloading OC clients" due to not able to find the target file points to by the url, 
-most likely RedHat has published another OC client release.  Go the website points to by the url minus the filename to find out the OC client filename.  
-Update the v_ocp_client variable in the vars.yaml file with the latest dot release number.  For example:
+most likely RedHat has published another OC client release.  Go to the website points to by the url minus the filename to find the
+OC client filename. Update the v_ocp_client variable in the vars.yaml file with the latest dot release number.  For example:
 
 v_ocp_client: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-{{openshift_build}}.0.tar.gz"
 
@@ -265,7 +265,7 @@ Update IP tables on KVM Host to access OpenShift URL
 
 On KVM Host run the following commands:
 ```
-iptables-saves < /root/savedrules.txt
+iptables-save > /root/savedrules.txt
 iptables -I FORWARD -o openshift4 -d  <HELPER_NODE_IP> -j ACCEPT
 iptables -t nat -I PREROUTING -p tcp --dport 443 -j DNAT --to <HELPER_NODE_IP>:443
 ```
