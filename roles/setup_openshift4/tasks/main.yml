@@ -41,6 +41,7 @@
   copy:
     src: /opt/ocp4/{{item}} 
     dest: /var/www/html/ignition/
+    mode: 644
     remote_src: yes
   with_items: 
     ['master.ign', 'bootstrap.ign', 'worker.ign']

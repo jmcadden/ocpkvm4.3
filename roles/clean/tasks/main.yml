@@ -139,3 +139,4 @@
 
 - name: unset ssh connection 
   command: "unset SSH_AUTH_SOCK"
+  ignore_errors: true

@@ -1,5 +1,8 @@
 # This can be downlaod from RedHat OpensShift 
-pullsecret: 'GET YOUR OWN FROM https://cloud.redhat.com/openshift/install'
+#pullsecret: 'GET YOUR OWN FROM https://cloud.redhat.com/openshift/install'
+# Example:
+#pullsecret: "{\"auths\":{\"cloud.openshift.com\":{\"auth\":\"...\",\"email\":\"example@example.com\"},\"quay.io\":{\"auth\":\"...\",\"email\":\"example@example.com\"},\"registry.connect.redhat.com\":{\"auth\":\"...\",\"email\":\"example@example.com\"},\"registry.redhat.io\":{\"auth\":\"...\",\"email\":\"example@example.com\"}}}"
+
 
 base_domain: "cld.fisc.lab"
 base_domain_prefix: "test"
@@ -15,8 +18,8 @@ portable:
   # Hint its the first IP address of portable pool. You can obtain this on portable Ip address page
   network: "100.106.11.192" 
   # These IP address are default DNS server in IC4G  
-  dns1: "100.100.100.80"
-  dns2: "100.100.100.81"
+  dns1: "9.0.130.50"
+  dns2: "8.8.8.8"
   
 # Helper Node which will act as 
 # DNS,Load balancer, WebServer, DHCP, PXE, TFTP, NFSv4 and Basetion Host
@@ -56,14 +59,13 @@ worker_ip:
 openshift_build: "4.3"
 
 # RHCOS build and url
-v_rhcos_bios: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-{{openshift_build}}.0-x86_64-metal.raw.gz"
-v_rhcos_initramfs: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-{{openshift_build}}.0-x86_64-installer-initramfs.img"
-v_rhcos_install_kernel: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-{{openshift_build}}.0-x86_64-installer-kernel"
+v_rhcos_bios: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/4.3.0/rhcos-{{openshift_build}}.0-x86_64-metal.raw.gz"
+v_rhcos_initramfs: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/4.3.0/rhcos-{{openshift_build}}.0-x86_64-installer-initramfs.img"
+v_rhcos_install_kernel: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/4.3.0/rhcos-{{openshift_build}}.0-x86_64-installer-kernel"
 
 # OCP Installer
-v_ocp_client: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux-{{openshift_build}}.5.tar.gz"
-v_ocp_installer: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-install-linux-{{openshift_build}}.5.tar.gz"
-
+v_ocp_client: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.5/openshift-client-linux-{{openshift_build}}.5.tar.gz"
+v_ocp_installer: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.5/openshift-install-linux-{{openshift_build}}.5.tar.gz"
 
 
 
@@ -102,7 +104,7 @@ kvm_vm_nics:
     prefix: "{{ portable.prefix }}"
     gateway: "{{ portable.gateway }}"
     dns_server: "{{ portable.dns1 }}"
-    config: "--type network --source {{ kvm_network_name }} --model virtio"
+    config: "--type network --source {{ kvm_network_name }} --model e1000"
 
 
 
