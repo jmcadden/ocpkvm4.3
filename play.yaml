@@ -10,3 +10,6 @@
     - update_helper_kvm
     - setup_openshift4
 
+- hosts: kvmhost
+  roles:
+    - start_ocp4_kvms

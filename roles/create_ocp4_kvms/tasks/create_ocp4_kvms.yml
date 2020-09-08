@@ -1,2 +1,14 @@
-- name: run the bash script to create kvms
-  command: " /bin/sh {{ role_path }}/files/create_kvm.sh {{ libvirt_image_directory }} {{ kvm_network_name }}"
+- name: run the bash script to create bootstrap kvms
+  command: " /bin/sh {{ role_path }}/files/create_kvm.sh {{ item.name }} {{ kvm_network_name }} {{ disk }} {{ libvirt_image_directory }}"
+  with_items:
+    - "{{ hostvars['localhost']['bootstrap'] }}"
+
+- name: run the bash script to create master kvms
+  command: " /bin/sh {{ role_path }}/files/create_kvm.sh {{ item.name }} {{ kvm_network_name }} {{ disk }} {{ libvirt_image_directory }}"
+  with_items:
+    - "{{ hostvars['localhost']['masters'] }}"
+
+- name: run the bash script to create worker kvms
+  command: " /bin/sh {{ role_path }}/files/create_kvm.sh {{ item.name }} {{ kvm_network_name }} {{ disk }} {{ libvirt_image_directory }}"
+  with_items:
+    - "{{ hostvars['localhost']['workers'] }}"

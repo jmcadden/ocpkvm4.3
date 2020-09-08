@@ -65,7 +65,8 @@
   - name: Write out "{{ dns.domain }}" zone file
     template:
       src: "{{ role_path }}/templates/zonefile.j2"
-      dest: /var/named/zonefile.db
+      dest: /var/named/zonefile.db 
+      mode: 644
     notify:
       - restart bind
   
@@ -73,6 +74,7 @@
     template:
       src: "{{ role_path }}/templates/reverse.j2"
       dest: /var/named/reverse.db
+      mode: 644
     notify:
       - restart bind
   
@@ -197,9 +199,13 @@
 
   - name: Set the default tftp file
     template:
-      src: "{{ role_path }}/templates/default.j2"
-      dest: /var/lib/tftpboot/pxelinux.cfg/default
+      src: "{{ role_path }}/templates/{{ item }}.j2"
+      dest: "/var/lib/tftpboot/pxelinux.cfg/{{ item }}"
       mode: 0555
+    with_items: 
+      - bootstrap
+      - master
+      - worker
     notify:
       - restart tftp
     when: not staticips
@@ -217,6 +223,30 @@
       dest: /etc/systemd/system/helper-tftp.service
       mode: '0655'
     when: not staticips
+
+  - name: prepare bootstrap kvms to pxe boot 
+    file:
+      src: ./bootstrap
+      dest: "/var/lib/tftpboot/pxelinux.cfg/01-{{ item.macaddr | replace(':','-') }}"
+      state: link
+    with_items:
+      - "{{ bootstrap }}"
+
+  - name: prepare master kvms to pxe boot
+    file:
+      src: ./master
+      dest: "/var/lib/tftpboot/pxelinux.cfg/01-{{ item.macaddr | replace(':','-') }}"
+      state: link
+    with_items:
+      - "{{ masters }}"
+
+  - name: prepare worker kvms to pxe boot
+    file:
+      src: ./worker
+      dest: "/var/lib/tftpboot/pxelinux.cfg/01-{{ item.macaddr | replace(':','-') }}"
+      state: link
+    with_items:
+      - "{{ workers }}"
 
   - name: Systemd daemon reload
     systemd:
